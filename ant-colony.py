@@ -69,7 +69,7 @@ def main():
     iterations = 100  # Number of iterations
     alpha = 1  # Influence of pheromone
     beta = 3  # Influence of distance
-    rho = 0  # Pheromone evaporation rate
+    rho = 0.5  # Pheromone evaporation rate
 
     # Intialize the ant colony
     ant_colony = AntColony(ant_population, iterations, alpha, beta, rho)
