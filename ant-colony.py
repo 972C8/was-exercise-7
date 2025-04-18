@@ -46,12 +46,33 @@ class AntColony:
         # Initially, the shortest distance is set to infinite
         shortest_distance = np.inf
 
+        # For every iteration, run all the ants
+        for _ in range(self.iterations):
+            for ant in self.ants:
+                ant.run()
+                # Update the list of solutions and shortest distance
+                if ant.travelled_distance < shortest_distance:
+                    shortest_distance = ant.travelled_distance
+                    solution = ant.tour.copy()
+
+            # Update the pheromone trails and reset ants for next iteration
+            self.environment.update_pheromone_map(self.ants)
+            for ant in self.ants:
+                ant.reset()
+
         return solution, shortest_distance
 
 
 def main():
+    # Parameters may be adjusted to improve performance:
+    ant_population = 48  # Number of ants in the colony
+    iterations = 100  # Number of iterations
+    alpha = 1  # Influence of pheromone
+    beta = 3  # Influence of distance
+    rho = 0  # Pheromone evaporation rate
+
     # Intialize the ant colony
-    ant_colony = AntColony(1, None, None, None, None)
+    ant_colony = AntColony(ant_population, iterations, alpha, beta, rho)
 
     # Solve the ant colony optimization problem
     solution, distance = ant_colony.solve()
